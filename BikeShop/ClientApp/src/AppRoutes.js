@@ -1,8 +1,9 @@
+import React, { useState, useEffect } from 'react';
 import { Counter } from "./components/Counter";
 import { FetchData } from "./components/FetchData";
 import { HomePage } from "./components/HomePage";
-
-
+import { OrderPage } from "./components/OrderPage";
+ 
 const AppRoutes = [
   {
     index: true,
@@ -15,7 +16,11 @@ const AppRoutes = [
   {
     path: '/fetch-data',
     element: <FetchData />
-  }
+    },
+    {
+        path: '/order',
+        element : <OrderPage />
+    }
 ];
 
 export default AppRoutes;

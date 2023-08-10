@@ -1,18 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Container } from 'reactstrap';
 import { NavMenu } from './NavMenu';
+import { HomePage } from "./HomePage";
+import { OrderPage } from "./OrderPage";
+export function Layout(props) {
+    const { cartItems, setCartItems, children } = props;
+    
 
-export class Layout extends Component {
-  static displayName = Layout.name;
-
-  render() {
     return (
-      <div>
-        <NavMenu />
-        <Container>
-          {this.props.children}
-        </Container>
-      </div>
+        <div>
+            <NavMenu />
+            <Container>
+                <HomePage cartItems={cartItems} setCartItems={setCartItems} />
+                <OrderPage cartItems={cartItems} setCartItems={setCartItems}  />
+            </Container>
+        </div>
     );
-  }
+
 }
