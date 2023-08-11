@@ -17,7 +17,7 @@ export function AdminPage() {
         // Add more dummy orders here
     ];
 
-    console.log("date "+ordersData)
+    //console.log("date "+ordersData)
 
     return (
         <div className="AdminPage">  

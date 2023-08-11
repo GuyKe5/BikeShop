@@ -1,0 +1,69 @@
+﻿[
+  {
+    "id": 1,
+    "imagesPaths": [ "bike1.jpg" ],
+    "name": "Mountain Bike 1",
+    "description": "A versatile mountain bike for all terrains."
+  },
+  {
+    "id": 2,
+    "imagesPaths": [ "bike2.jpg", "bike3.jpg" ],
+    "name": "Mountain Bike 2",
+    "description": "Another great mountain bike for adventurous rides."
+  },
+  {
+    "id": 3,
+    "imagesPaths": [ "bike2.jpg", "bike3.jpg" ],
+    "name": "Mountain Bike 2",
+    "description": "Another great mountain bike for adventurous rides."
+  },
+  {
+    "id": 4,
+    "imagesPaths": [ "bike2.jpg", "bike3.jpg" ],
+    "name": "Mountain Bike 2",
+    "description": "Another great mountain bike for adventurous rides."
+  },
+  {
+    "id": 5,
+    "imagesPaths": [ "bike2.jpg", "bike3.jpg" ],
+    "name": "Mountain Bike 2",
+    "description": "Another great mountain bike for adventurous rides."
+  },
+  {
+    "id": 6,
+    "imagesPaths": [ "bike2.jpg", "bike3.jpg" ],
+    "name": "Mountain Bike 2",
+    "description": "Another great mountain bike for adventurous rides."
+  },
+  {
+    "id": 7,
+    "imagesPaths": [ "bike2.jpg", "bike3.jpg" ],
+    "name": "Mountain Bike 2",
+    "description": "Another great mountain bike for adventurous rides."
+  },
+  {
+    "id": 8,
+    "imagesPaths": [ "bike2.jpg", "bike3.jpg" ],
+    "name": "Mountain Bike 2",
+    "description": "Another great mountain bike for adventurous rides."
+  },
+  {
+    "id": 9,
+    "imagesPaths": [ "bike2.jpg", "bike3.jpg" ],
+    "name": "Mountain Bike 2",
+    "description": "Another great mountain bike for adventurous rides."
+  },
+  {
+    "id": 10,
+    "imagesPaths": [ "bike2.jpg", "bike3.jpg" ],
+    "name": "Mountain Bike 2",
+    "description": "Another great mountain bike for adventurous rides."
+  },
+  {
+    "id": 11,
+    "imagesPaths": [ "bike2.jpg", "bike3.jpg" ],
+    "name": "Mountain Bike 2",
+    "description": "Another great mountain bike for adventurous rides."
+  }
+
+];

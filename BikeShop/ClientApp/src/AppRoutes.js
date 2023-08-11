@@ -13,10 +13,10 @@ const AppRoutes = [
     path: '/counter',
     element: <Counter />
   },
-  {
-    path: '/fetch-data',
-    element: <FetchData />
-    },
+  //{
+  //  path: '/fetch-data',
+  //  element: <FetchData />
+  //  },
     {
         path: '/order',
         element : <OrderPage />

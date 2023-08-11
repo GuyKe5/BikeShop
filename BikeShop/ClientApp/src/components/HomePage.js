@@ -14,16 +14,23 @@ export function HomePage(props) {
     const { cartItems, setCartItems } = props;
     
 
-      useEffect(() => {
-        // Fetch or load your bike product data here and set it in the "products" state
-        // For demonstration purposes, we'll use dummy data
-        const dummyData = [
-          { id: 1, image: 'bike1.jpg', title: 'Mountain Bike 1', description: 'A versatile mountain bike for all terrains.' },
-          { id: 2, image: 'bike2.jpg', title: 'Mountain Bike 2', description: 'Another great mountain bike for adventurous rides.' },
-          // Add more bike products...
-        ];
-        setProducts(dummyData);
-      }, []);
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+               // const response = await fetch('weatherforecast');
+                const response = await fetch('weatherforecast'); // Replace with your actual server URL
+
+                const data = await response.json();
+                setProducts(data);
+            } catch (error) {
+                // Handle any errors that might occur during fetching
+                console.error('Error fetching products:', error);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
 
       const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -59,7 +66,7 @@ export function HomePage(props) {
               <Card
                 key={product.id}
                 image={product.image}
-                title={product.title}
+                name={product.name}
                 description={product.description}
                 onAddToCart={() => handleAddToCart(product.id)}
               />

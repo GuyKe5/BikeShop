@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import './Card.css'
-const Card = ({ image, title, description, onAddToCart }) => {
+const Card = ({ image, name, description, onAddToCart }) => {
   const [isAdded, setIsAdded] = useState(false);
 
   const handleAddToCart = () => {
@@ -12,8 +12,8 @@ const Card = ({ image, title, description, onAddToCart }) => {
 
   return (
     <div className="card">
-      <img src={image} alt={title} />
-      <h3>{title}</h3>
+      <img src={image} alt={name} />
+      <h3>{name}</h3>
       <p>{description}</p>
       <button onClick={handleAddToCart}>
         {isAdded ? 'Added to Cart' : 'Add to Cart'}

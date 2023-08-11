@@ -55,3 +55,21 @@
     .button-style:hover {
         background-color: #0056b3;
     }
+
+.pagination {
+    margin-top: 20px;
+}
+
+    .pagination span {
+        cursor: pointer;
+        padding: 5px 10px;
+        margin: 5px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+        .pagination span.active {
+            background-color: #007bff;
+            color: #fff;
+            border-color: #007bff;
+        }

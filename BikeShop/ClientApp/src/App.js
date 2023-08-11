@@ -6,6 +6,7 @@ import { OrderPage } from "./components/OrderPage";
 import { NavMenu } from './components/NavMenu';
 import { Layout } from './components/Layout';
 import { AdminPage } from './components/AdminPage';
+import { UploadItemsPage } from './components/UploadItemsPage';
 import { Login } from './components/Login';
 import './custom.css';
 
@@ -18,8 +19,10 @@ export default function App() {
            
                 <Route path="/" element={<HomePage cartItems={cartItems} setCartItems={setCartItems} />} />
                 <Route path="/order" element={<OrderPage cartItems={cartItems} setCartItems={setCartItems} />} />
-                <Route path="/Admin" element={< AdminPage />} />
-                <Route path="/Login" element={< Login />} />
+                <Route path="/admin" element={< AdminPage />} />
+                <Route path="/login" element={< Login />} />
+                <Route path="/upload" element={< UploadItemsPage />} />
+                
                 
 
 

@@ -1,33 +1,43 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nancy.Json;
 
 namespace BikeShop.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("weatherforecast")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
-        }
+      
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public Item[] Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            try
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "items.json");
+                Console.WriteLine($"File Path: {filePath}");
+
+
+                if (System.IO.File.Exists(filePath))
+                {
+                    string jsonContent = System.IO.File.ReadAllText(filePath);
+                    Console.WriteLine(jsonContent);
+                    JavaScriptSerializer js = new JavaScriptSerializer();
+                    Item[] items = js.Deserialize<Item[]>(jsonContent);
+
+                    return items;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
         }
     }
 }
