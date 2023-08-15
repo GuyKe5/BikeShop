@@ -17,7 +17,7 @@ namespace BikeShop.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet("getit")]
         public IActionResult Get()
         {
             try

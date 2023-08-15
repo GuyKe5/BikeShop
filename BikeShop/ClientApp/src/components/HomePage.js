@@ -1,6 +1,6 @@
-    // HomePage.js
+ 
     import React, { useState, useEffect } from 'react';
-    import { Link } from 'react-router-dom'; // Import Link from React Router
+    import { Link } from 'react-router-dom'; 
     import Card from './Card.js';
 
     import './HomePage.css'
@@ -17,13 +17,13 @@ export function HomePage(props) {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-               // const response = await fetch('weatherforecast');
-                const response = await fetch('weatherforecast'); // Replace with your actual server URL
+                const response = await fetch('weatherforecast');
+            //    const response = await fetch('weatherforecast/UploadItem');
 
                 const data = await response.json();
                 setProducts(data);
             } catch (error) {
-                // Handle any errors that might occur during fetching
+              
                 console.error('Error fetching products:', error);
             }
         };
@@ -65,7 +65,7 @@ export function HomePage(props) {
             {products.slice(startIndex, endIndex).map((product) => (
               <Card
                 key={product.id}
-                image={product.image}
+                    imagesPaths={product.imagesPaths}
                 name={product.name}
                 description={product.description}
                 onAddToCart={() => handleAddToCart(product.id)}
