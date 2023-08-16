@@ -5,7 +5,7 @@ import './NavMenu.css';
 
 
 
-export function NavMenu() {
+export function NavMenu({ isAdmin}) {
     return (
 
 
@@ -19,13 +19,13 @@ export function NavMenu() {
         <nav>
             <ul className="nav-links">
                 <li>
-                        <Link to={"/login"} > login </Link> 
+                          <Link to={"/login"} > login </Link> 
                 </li>
                 <li>
-                        <Link to={"/admin"} > admin </Link> 
+                        {isAdmin && <Link to={"/admin"} > admin </Link>}
                 </li>
                 <li>
-                        <Link to={"/upload"} > upload </Link> 
+                        {isAdmin && <Link to={"/upload"} > upload </Link>}
                 </li>
             </ul>
         </nav>

@@ -1,16 +1,41 @@
 ﻿import React, { useState } from 'react';
 import './LoginPage.css'; // Import your custom CSS file for styling
 
-export function Login() { 
+export function Login({ isAdmin,setIsAdmin}) { 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [msg, setMsg] = useState('')
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         // You can add your authentication logic here
         // For demonstration purposes, we'll just set isLoggedIn to true
-        setIsLoggedIn(true);
-    };
+        const formData = new FormData();
+        formData.append('username', username);
+        formData.append('password', password);
+
+        try {
+            const response = await fetch("weatherforecast/Login", {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                setIsAdmin(true)
+                setMsg("Logged in")
+            }
+            else {
+                setMsg("username or password are wrong")
+            }
+
+        } catch (error) {
+            setMsg("error")
+            console.error("error loggin in");
+        }
+    }
+            
+      
+       
+  
 
     return (
         <div className="login-page">
@@ -45,6 +70,7 @@ export function Login() {
                         Login
                     </button>
                 </form>
+                { msg}
             </div>
         </div>
     );

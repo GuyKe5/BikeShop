@@ -3,7 +3,11 @@ import './AdminPage.css'
 // need to fetch the data from the json file 
 
 
-export function AdminPage() {
+export function AdminPage({ isAdmin }) {
+
+    if (isAdmin !== true) {
+        return <>you need to log in as admin to see this page</>
+    }
     const dummyOrders = [
         {
             id: 1,

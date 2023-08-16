@@ -23,7 +23,7 @@ namespace BikeShop.Controllers
                 if (System.IO.File.Exists(filePath))
                 {
                     string jsonContent = System.IO.File.ReadAllText(filePath);
-                   
+
                     JavaScriptSerializer js = new JavaScriptSerializer();
                     Item[] items = js.Deserialize<Item[]>(jsonContent);
 
@@ -49,12 +49,12 @@ namespace BikeShop.Controllers
 
                 if (System.IO.File.Exists(filePath))
                 {
-                  
+
                     //upload image
 
 
-                 //   var image = Request.Form.Files["images"];
-                
+                    //   var image = Request.Form.Files["images"];
+
 
                     IFormFile image1 = Request.Form.Files["image1"];
                     IFormFile image2 = Request.Form.Files["image2"];
@@ -64,27 +64,27 @@ namespace BikeShop.Controllers
 
                     var images = new List<IFormFile>();
 
-                  if(image1!=null)
+                    if (image1 != null)
                     {
                         images.Add(image1);
                     }
-                  if(image2!=null)
+                    if (image2 != null)
                     {
                         images.Add(image2);
                     }
-                  if(image3!=null)
+                    if (image3 != null)
                     {
                         images.Add(image3);
                     }
-                  if(image4!=null)
+                    if (image4 != null)
                     {
                         images.Add(image4);
                     }
-                  if(image5 != null)
+                    if (image5 != null)
                     {
                         images.Add(image5);
                     }
-                   
+
 
                     // Define the path where you want to store the images
 
@@ -100,8 +100,8 @@ namespace BikeShop.Controllers
                         var uniqueFileName = Guid.NewGuid().ToString() + "_" + images[i].FileName;
 
                         // Combine the upload path with the unique file name
-                         string path = Path.Combine(uploadPath, uniqueFileName);
-                         imagePaths.Add(path);
+                        string path = Path.Combine(uploadPath, uniqueFileName);
+                        imagePaths.Add(path);
 
                         // Save the image to the specified path
                         using (var fileStream = new FileStream(path, FileMode.Create))
@@ -109,12 +109,23 @@ namespace BikeShop.Controllers
                             await images[i].CopyToAsync(fileStream);
                         }
                     }
-                        //upload item
-                        string jsonContent = System.IO.File.ReadAllText(filePath);
-                        JavaScriptSerializer js = new JavaScriptSerializer();
-                        List<Item> items = js.Deserialize<List<Item>>(jsonContent);
-                    
-                    int id = items[items.Count - 1].id+1;
+                    //upload item
+                    string jsonContent = System.IO.File.ReadAllText(filePath);
+                    JavaScriptSerializer js = new JavaScriptSerializer();
+                    List<Item> items;
+                    items = js.Deserialize<List<Item>>(jsonContent);
+                  
+                    int id;
+                    if (items == null)
+                    {
+                        items = new List<Item>();
+                        id = 0;
+                    }
+                    else
+                    {
+                        id = items[items.Count - 1].id + 1;
+                    }
+                     
 
                     var name = Request.Form["name"];
                     var price = Request.Form["price"];
@@ -127,7 +138,7 @@ namespace BikeShop.Controllers
                     item.id = id;
 
                     item.imagesPaths = new List<string>();
-                    item.imagesPaths =(imagePaths);
+                    item.imagesPaths = (imagePaths);
                     items.Add(item);
                     string updatedJson = js.Serialize(items);
 
@@ -140,15 +151,15 @@ namespace BikeShop.Controllers
                 else
                 {
                     Console.WriteLine("items file path could be found");
-                  return  StatusCode(500, new { error = "items file path couldnt be found" });
+                    return StatusCode(500, new { error = "items file path couldnt be found" });
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Console.WriteLine("unknown error  "+ex);
+                Console.WriteLine("unknown error  " + ex);
                 return StatusCode(500, new { error = "unknown error" });
             }
-           
+
         }
 
         [HttpPost("UploadImage")]
@@ -216,6 +227,45 @@ namespace BikeShop.Controllers
             return BadRequest();
         }
 
+
+        [HttpPost("Login")]
+        public IActionResult Login()
+        {
+            try
+            {
+                string username = Request.Form["username"];
+                string password = Request.Form["password"];
+
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "Login.json");
+
+
+
+                if (System.IO.File.Exists(filePath))
+                {
+
+                    string jsonContent = System.IO.File.ReadAllText(filePath);
+
+                    JavaScriptSerializer js = new JavaScriptSerializer();
+                    User user = js.Deserialize<User>(jsonContent);
+                    if (username == user.username && password == user.password)
+                    {
+                        return Ok();
+                    }
+                    else
+                    {
+                        return NotFound("username or password incorrect");
+                    }
+                   
+                }
+                return BadRequest("file doesnt exsist");
+
+            }
+            catch
+            {
+
+                return BadRequest();
+            }
+        }
     }
 
 }

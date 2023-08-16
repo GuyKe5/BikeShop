@@ -12,16 +12,17 @@ import './custom.css';
 
 export default function App() {
     const [cartItems, setCartItems] = useState([]);
+    const [isAdmin, setIsAdmin] = useState(true);
     return (
         <>
-        <NavMenu />
+            <NavMenu isAdmin={isAdmin} />
         <Routes>
            
-                <Route path="/" element={<HomePage cartItems={cartItems} setCartItems={setCartItems} />} />
-                <Route path="/order" element={<OrderPage cartItems={cartItems} setCartItems={setCartItems} />} />
-                <Route path="/admin" element={< AdminPage />} />
-                <Route path="/login" element={< Login />} />
-                <Route path="/upload" element={< UploadItemsPage />} />
+                <Route path="/" element={<HomePage isAdmin={isAdmin}  cartItems={cartItems} setCartItems={setCartItems} />} />
+                <Route path="/order" element={<OrderPage isAdmin={isAdmin} cartItems={cartItems} setCartItems={setCartItems} />} />
+                <Route path="/admin" element={< AdminPage isAdmin={isAdmin} />} />
+                <Route path="/login" element={< Login isAdmin={isAdmin} setIsAdmin={ setIsAdmin} />} />
+                <Route path="/upload" element={< UploadItemsPage isAdmin={isAdmin} />} />
                 
                 
 
