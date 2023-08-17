@@ -8,11 +8,16 @@ namespace BikeShop
         public string?  price { get; set; }
         public  string? description { get; set; }
         public List<string>? imagesPaths { get; set; }
+        public List<string>? images { get; set; }
     }
     public class User
     {
         public string username { get; set; }
         public  string  password { get; set; }
+    }
+    public class Key
+    {
+        public string connectionString { get; set; }
     }
 
 }

@@ -1,4 +1,4 @@
-﻿    import React, { useState,useEffect } from 'react';
+﻿   import React, { useState,useEffect } from 'react';
     import './UploadPage.css'; // Import your custom CSS file for styling
 
     export function UploadItemsPage({ isAdmin }) {
@@ -75,7 +75,7 @@
                 formData.append('image5', image5)
 
 
-                fetch('weatherforecast/UploadItem', {
+                fetch('weatherforecast/UploadItem2', {
                     method: 'POST',
                     body: formData
                 })
@@ -83,7 +83,7 @@
                     .then(data => {
                         // Handle success response from the controller
                         console.log("SUCSEES");
-                    //    setMsg("item Uploaded ")
+                      setMsg("item Uploaded ")
                     })
                     .catch(error => {
                         // Handle error

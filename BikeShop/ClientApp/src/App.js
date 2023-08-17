@@ -12,19 +12,20 @@ import './custom.css';
 
 export default function App() {
     const [cartItems, setCartItems] = useState([]);
-    const [isAdmin, setIsAdmin] = useState(true);
+    const [isAdmin, setIsAdmin] = useState(false);
     return (
         <>
+
             <NavMenu isAdmin={isAdmin} />
-        <Routes>
-           
-                <Route path="/" element={<HomePage isAdmin={isAdmin}  cartItems={cartItems} setCartItems={setCartItems} />} />
+            <Routes>
+
+                <Route path="/" element={<HomePage isAdmin={isAdmin} cartItems={cartItems} setCartItems={setCartItems} />} />
                 <Route path="/order" element={<OrderPage isAdmin={isAdmin} cartItems={cartItems} setCartItems={setCartItems} />} />
                 <Route path="/admin" element={< AdminPage isAdmin={isAdmin} />} />
-                <Route path="/login" element={< Login isAdmin={isAdmin} setIsAdmin={ setIsAdmin} />} />
+                <Route path="/login" element={< Login isAdmin={isAdmin} setIsAdmin={setIsAdmin} />} />
                 <Route path="/upload" element={< UploadItemsPage isAdmin={isAdmin} />} />
-                
-                
+
+
 
 
                 { /*
@@ -34,9 +35,9 @@ export default function App() {
                })} 
                 */}
 
-                
+
             </Routes>
-            </>
-      
+        </>
+
     );
 }

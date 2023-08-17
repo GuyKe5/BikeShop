@@ -66,6 +66,7 @@ export function HomePage(props) {
               <Card
                 key={product.id}
                     imagesPaths={product.imagesPaths}
+                    images={product.images }
                 name={product.name}
                 description={product.description}
                 onAddToCart={() => handleAddToCart(product.id)}

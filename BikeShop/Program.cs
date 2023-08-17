@@ -1,3 +1,12 @@
+
+//using BikeShop;
+//var service = new AzureBlobService();
+//await service.ListBlobContainersAsync();
+//await service.UploadFilesAsync();
+
+//Console.ReadLine();
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

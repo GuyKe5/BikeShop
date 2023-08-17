@@ -1,34 +1,13 @@
-// Card.js
 import React, { useState, useEffect } from 'react';
 import './Card.css';
 
-const Card = ({ imagesPaths, name, description, onAddToCart }) => {
+const Card = ({ imagesPaths, name, description, onAddToCart, images }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const [imageData, setImageData] = useState(null);
     const [isAdded, setIsAdded] = useState(false);
-
+   
     useEffect(() => {
-        const fetchImage = async () => {
-            if (imagesPaths.length > 0) {
-                const formData = new FormData();
-                formData.append('imagePath', imagesPaths[currentImageIndex]);
-
-                try {
-                    const response = await fetch("weatherforecast/images", {
-                        method: 'POST',
-                        body: formData
-                    });
-
-                    const blob = await response.blob();
-                    const objectURL = URL.createObjectURL(blob);
-                    setImageData(objectURL);
-                } catch (error) {
-                    console.error('Error fetching image:', error);
-                }
-            }
-        };
-        fetchImage();
-    }, [imagesPaths, currentImageIndex]);
+        setCurrentImageIndex(0); // Reset the current image index when images change
+    }, [images]);
 
     const handleAddToCart = () => {
         setIsAdded((prevIsAdded) => !prevIsAdded);
@@ -36,8 +15,15 @@ const Card = ({ imagesPaths, name, description, onAddToCart }) => {
     };
 
     const handleNextImage = () => {
-        if (currentImageIndex < imagesPaths.length - 1) {
+      
+       
+        if (currentImageIndex < images.length - 1) {
             setCurrentImageIndex(currentImageIndex + 1);
+            
+        }
+       
+        else {
+            setCurrentImageIndex(0);
         }
     };
 
@@ -45,17 +31,20 @@ const Card = ({ imagesPaths, name, description, onAddToCart }) => {
         if (currentImageIndex > 0) {
             setCurrentImageIndex(currentImageIndex - 1);
         }
+        else{
+            setCurrentImageIndex(images.length-1);
+        }
     };
 
     return (
         <div className="card">
             <div className="image-container">
-                {imageData && <img src={imageData} alt={name} />}
+                <img src={"data:image/png;base64," + images[currentImageIndex]} alt=" couldn't be loaded"  />
                 <div className="image-controls">
-                    <button className="scroll-button prev-button" onClick={handlePrevImage} disabled={currentImageIndex === 0}>
+                    <button className="scroll-button prev-button" onClick={handlePrevImage} >
                         &lt;
                     </button>
-                    <button className="scroll-button next-button" onClick={handleNextImage} disabled={currentImageIndex === imagesPaths.length - 1}>
+                    <button className="scroll-button next-button" onClick={handleNextImage} >
                         &gt;
                     </button>
                 </div>
