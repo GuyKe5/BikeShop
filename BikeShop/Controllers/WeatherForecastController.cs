@@ -6,7 +6,7 @@ using System.Text.Json;
 using System.Text;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
-
+using System.Text.Json;
 namespace BikeShop.Controllers
 {
     [ApiController]
@@ -324,7 +324,7 @@ namespace BikeShop.Controllers
                     }
 
 
-                    // Define the path where you want to store the images
+                  
 
                    
                     List<string> images64 = new List<string>(); 
@@ -333,12 +333,12 @@ namespace BikeShop.Controllers
 
 
 
-                        // Save the image to the specified path
+                        
                         images64.Add(ConvertImageToBase64(images[i]));
                     }
                     //upload item
 
-                    // string jsonContent = System.IO.File.ReadAllText(filePath);
+                    
                      var service = new AzureBlobService();
                     string jsonContent = await service.GetJsonFileContentsAsync("Data/items.json"); //get the old file from azure
                     JavaScriptSerializer js = new JavaScriptSerializer();
@@ -375,7 +375,7 @@ namespace BikeShop.Controllers
                     System.IO.File.WriteAllText(filePath, updatedJson);
 
                     //overwrite the file is azure
-                  await  service.UploadFilesAsync();
+                    await  service.UploadFilesAsync("Data/items.json");
 
 
                     return Ok();
@@ -396,7 +396,83 @@ namespace BikeShop.Controllers
         }
 
 
-       
+        [HttpPost("UploadOrder")]
+        public async Task<IActionResult> UploadOrder()
+        {
+            try
+            {
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "orders.json");
+
+                if (System.IO.File.Exists(filePath))
+                {
+
+                 
+
+                    var service = new AzureBlobService();
+                    string jsonContent = await service.GetJsonFileContentsAsync("Data/orders.json"); //get the old file from azure
+                    JavaScriptSerializer js = new JavaScriptSerializer();
+                    List<Order> orders;
+                    orders = js.Deserialize<List<Order>>(jsonContent);
+
+                    int id;
+                    if (orders == null)
+                    {
+                        orders = new List<Order>();
+                        id = 0;
+                    }
+                    else
+                    {
+                        id = orders[orders.Count - 1].id + 1;
+                    }
+
+
+                    var phone = Request.Form["phone"];
+                    var address = Request.Form["address"];
+
+                    var items = Request.Form["cartItems"];
+
+
+                    //    List<Item> itemsList = js.Deserialize<List<Item>>(items);
+                    Item[] itemArray = js.Deserialize<Item[]>(items);
+               
+
+                    //add the new order
+
+                    Order order = new Order();
+                    order.phone = phone.ToString();
+                    order.address = address.ToString();
+                    order.items = itemArray;
+                    order.id = id;
+
+                    orders.Add(order);
+                
+                    string updatedJson = js.Serialize(orders);
+
+                    System.IO.File.WriteAllText(filePath, updatedJson);
+
+                    //overwrite the file is azure
+                    await service.UploadFilesAsync("Data/orders.json");
+
+
+                    return Ok("good");
+
+                }
+                else
+                {
+                    Console.WriteLine("order file path could be found");
+                    return StatusCode(500, new { error = "order file path couldnt be found" });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("unknown error  " + ex);
+                return StatusCode(500, new { error = "unknown error" });
+            }
+
+        }
+
+
+
 
 
 

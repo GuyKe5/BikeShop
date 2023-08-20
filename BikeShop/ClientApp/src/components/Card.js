@@ -39,7 +39,7 @@ const Card = ({ imagesPaths, name, description, onAddToCart, images }) => {
     return (
         <div className="card">
             <div className="image-container">
-                <img src={"data:image/png;base64," + images[currentImageIndex]} alt=" couldn't be loaded"  />
+                <img src={"data:image/png;base64," + images[currentImageIndex]} alt=" "  />
                 <div className="image-controls">
                     <button className="scroll-button prev-button" onClick={handlePrevImage} >
                         &lt;

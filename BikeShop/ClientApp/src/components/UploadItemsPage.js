@@ -1,5 +1,5 @@
 ﻿   import React, { useState,useEffect } from 'react';
-    import './UploadPage.css'; // Import your custom CSS file for styling
+    import './UploadPage.css';
 
     export function UploadItemsPage({ isAdmin }) {
 
@@ -81,7 +81,7 @@
                 })
                     .then(response => response.json())
                     .then(data => {
-                        // Handle success response from the controller
+  
                         console.log("SUCSEES");
                       setMsg("item Uploaded ")
                     })
@@ -94,33 +94,14 @@
 
 
 
-                // Convert the item object to a Base64-encoded JSON string
-                const json = JSON.stringify(newItem)
 
-                // Build the query string
-                const queryString = `json=${json}`;
+              
 
-                // Make an HTTP GET request to upload the item data
-                const response = await fetch(`weatherforecast/UploadItem?${queryString}`);
-
-
-
-                if (response.ok) {
-                    // Item uploaded successfully
-                    console.log('Item uploaded successfully');
-                    setMsg('Item uploaded successfully')
-                    // You can handle any further actions, such as updating state, displaying a success message, etc.
-                } else {
-                    // Handle errors
-                   // console.error('Error uploading item:', response.statusText);
-                    console.log(response)
              
-                    // You can display an error message or take appropriate actions
-                }
             } catch (error) {
-                // Handle unexpected errors
+         
                 console.error('Error:', error);
-                // You can display an error message or take appropriate actions
+         
             }
         };
 

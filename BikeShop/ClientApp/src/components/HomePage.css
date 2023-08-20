@@ -1,19 +1,18 @@
-﻿.homepage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+﻿/* HomePageStyles.css */
+
+.homepage {
     padding: 20px;
-    margin-top: 60px; /* Add margin-top to create space between navbar and cards */
+    margin-top: 60px;
 }
 
 .cards-container {
-    /* Add styles to control spacing between cards */
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px; /* Adjust this value to control the space between cards horizontally */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
     max-width: 1200px;
-    margin: 0 auto; /* Removed margin from here, as we already added margin-top to homepage */
+    margin: 0 auto;
 }
+
 .cart-icon-container {
     position: fixed;
     top: 20px;
@@ -22,7 +21,7 @@
     align-items: center;
     cursor: pointer;
     margin-top: 59px;
-    margin-right: 13%;
+    margin-right: 5%;
 }
 
 .cart-icon {
@@ -30,16 +29,15 @@
     height: 30px;
 }
 
-/* Styles for the cart item count */
 .cart-item-count {
-    background-color: #ff0000; /* Red background */
-    color: #ffffff; /* White text */
+    background-color: #ff0000;
+    color: #ffffff;
     font-size: 12px;
     font-weight: bold;
     padding: 4px 8px;
     border-radius: 50%;
 }
-/* YourComponent.css */
+
 .button-style {
     display: inline-block;
     padding: 10px 20px;
@@ -73,3 +71,32 @@
             color: #fff;
             border-color: #007bff;
         }
+
+.order-button {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    margin-top: 20px; /* Add some space between pagination and button */
+}
+
+    .order-button a {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+        .order-button a:hover {
+            background-color: #0056b3;
+        }
+
+@media (max-width: 768px) {
+    .cards-container {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+}

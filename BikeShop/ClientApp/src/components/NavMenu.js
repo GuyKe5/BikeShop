@@ -14,7 +14,7 @@ export function NavMenu({ isAdmin}) {
     <header className="navbar">
         <div className="logo-container">
             {/*<img src={logo} alt="Bike Shop Logo" className="logo"  */}
-            <h1> <Link to={"/"} > Bise Shop </Link> </h1>
+            <h1> <Link to={"/"} > Bike Shop </Link> </h1>
         </div>
         <nav>
             <ul className="nav-links">

@@ -11,7 +11,8 @@ import './OrderPage.css'
      
 
   const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
+     const [address, setAddress] = useState('');
+     const [msg, setMsg] = useState('');
 
  
      function handleRemoveItem(itemId) {
@@ -35,7 +36,59 @@ import './OrderPage.css'
 
   const handleAddressChange = (event) => {
     setAddress(event.target.value);
-  };
+     };
+
+     const handleSubmit = async () => {
+         try {
+            
+             let items = cartItems;
+             items.forEach(function (item) {
+                 delete item.images;
+                 delete item.imagesPaths;
+             });
+
+             const formData = new FormData()
+             formData.append('phone', phone)
+             formData.append('address', address)
+             formData.append('cartItems', JSON.stringify(items))
+             
+           
+
+             fetch('weatherforecast/UploadOrder', {
+                 method: 'POST',
+                 body: formData
+             })
+                 .then(data => {
+                     console.log(data)
+                     
+                     if (data.ok) {
+                         console.log("SUCSEES");
+                         setMsg("order placed successfully! we will contact you via phone")
+                     }
+                     else {
+                         setMsg("error please try again later00000")
+                     }
+                 })
+                 .catch(error => {
+                     // Handle error
+                    
+                     console.log("not sucsees")
+                     console.error('Error uploading image:', error);
+                     setMsg('error please try again later')
+                 });
+
+
+
+
+
+
+
+         } catch (error) {
+
+             console.error('Error:', error);
+
+         }
+     };
 
   return (
     <div className="order-page">
@@ -44,8 +97,8 @@ import './OrderPage.css'
       <div className="cart-items">
         {cartItems.map((item) => (
           <div key={item.id} className="cart-item">
-            <span className="item-title">{item.title}</span>
-            <span className="item-quantity">Quantity: {item.quantity}</span>
+            <span className="item-title">{item.name}</span>
+           {/* <span className="item-quantity">Quantity: {item.quantity}</span>*/}
             <button className="remove-button" onClick={() => handleRemoveItem(item.id)}>
               Remove
             </button>
@@ -73,7 +126,8 @@ import './OrderPage.css'
         />
       </div>
 
-      <button className="submit-button">Place Order</button>
+          <button onClick={handleSubmit} className="submit-button">Place Order</button>
+         <br></br> {msg }
     </div>
   );
 };
