@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import './Card.css';
-
-const Card = ({ imagesPaths, name, description, onAddToCart, images }) => {
+import { DeletePopUp } from './DeletePopUp';
+const Card = ({ imagesPaths, name, description, onAddToCart, images, isAdmin ,ItemId }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isAdded, setIsAdded] = useState(false);
-   
+    const [showPopup, setShowPopup] = useState(false);
+    
     useEffect(() => {
         setCurrentImageIndex(0); // Reset the current image index when images change
     }, [images]);
@@ -35,13 +36,25 @@ const Card = ({ imagesPaths, name, description, onAddToCart, images }) => {
             setCurrentImageIndex(images.length-1);
         }
     };
+    const popUpDelete = () => {
+        setShowPopup(true);
+    }
+
 
     return (
         <div className="card">
+            {isAdmin && (
+                <button className="deleteButton" onClick={popUpDelete}>
+                    <span role="img" aria-label="Delete Icon">
+                        🗑️
+                    </span>
+                </button>
+            )}
+            {showPopup && <DeletePopUp showPopup={showPopup} setShowPopup={setShowPopup} ItemId={ItemId} />}
             <div className="image-container">
                 <img src={"data:image/png;base64," + images[currentImageIndex]} alt=" "  />
                 <div className="image-controls">
-                    <button className="scroll-button prev-button" onClick={handlePrevImage} >
+                    <button className="scroll-button prev-but   ton" onClick={handlePrevImage} >
                         &lt;
                     </button>
                     <button className="scroll-button next-button" onClick={handleNextImage} >

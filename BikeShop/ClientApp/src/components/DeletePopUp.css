@@ -1,0 +1,38 @@
+﻿/* DeletePopUp.css */
+.popUp {
+    position: relative;
+    text-align: center;
+    margin: 20px;
+    z-index: 3;
+}
+
+.popupContent {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 90%; /* Adjust the maximum width to fit available space */
+    width: 300px; /* Set a default width */
+    overflow: hidden; /* Hide any overflowing content */
+}
+
+    .popupContent p {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+    button:hover {
+        background-color: #f1f1f1;
+    }

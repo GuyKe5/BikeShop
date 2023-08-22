@@ -22,13 +22,13 @@ namespace BikeShop.Controllers
             {
 
                 var service = new AzureBlobService();
-                string jsonContent = await service.GetJsonFileContentsAsync("Data/items.json");
+                string jsonContent = await service.GetJsonFileContentsAsync("items.json");
 
 
-                    JavaScriptSerializer js = new JavaScriptSerializer();
-                    Item[] items = js.Deserialize<Item[]>(jsonContent);
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                Item[] items = js.Deserialize<Item[]>(jsonContent);
 
-                    return items;
+                return items;
 
             }
             catch (Exception ex)
@@ -37,192 +37,42 @@ namespace BikeShop.Controllers
                 return null;
             }
         }
-        [HttpPost("UploadItem")]
-        public async Task<IActionResult> UploadItem()
+
+
+        [HttpPost("DeleteItem")]
+        public async void DeleteItem()
         {
             try
             {
+                
+                     int itemId =int.Parse( Request.Form["ItemId"] );
                 string filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "items.json");
 
-                if (System.IO.File.Exists(filePath))
-                {
+                var service = new AzureBlobService();
 
-                    //upload image
+                string jsonContent = await service.GetJsonFileContentsAsync("items.json");
 
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                List<Item> items;
+                items = js.Deserialize<List<Item>>(jsonContent);
 
-                    //   var image = Request.Form.Files["images"];
+                items.RemoveAll(item => item.id == itemId);
+                string updatedJson = js.Serialize(items);
 
+                System.IO.File.WriteAllText(filePath, updatedJson);
 
-                    IFormFile image1 = Request.Form.Files["image1"];
-                    IFormFile image2 = Request.Form.Files["image2"];
-                    IFormFile image3 = Request.Form.Files["image3"];
-                    IFormFile image4 = Request.Form.Files["image4"];
-                    IFormFile image5 = Request.Form.Files["image5"];
-
-                    var images = new List<IFormFile>();
-
-                    if (image1 != null)
-                    {
-                        images.Add(image1);
-                    }
-                    if (image2 != null)
-                    {
-                        images.Add(image2);
-                    }
-                    if (image3 != null)
-                    {
-                        images.Add(image3);
-                    }
-                    if (image4 != null)
-                    {
-                        images.Add(image4);
-                    }
-                    if (image5 != null)
-                    {
-                        images.Add(image5);
-                    }
+                //overwrite the file is azure
+                await service.UploadFilesAsync("items.json");
 
 
-                    // Define the path where you want to store the images
 
-                    var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "Images");
-                    if (!Directory.Exists(uploadPath))
-                    {
-                        Directory.CreateDirectory(uploadPath);
-                    }
-                    List<string> imagePaths = new List<string>();
-                    for (int i = 0; i < images.Count; i++)
-                    {
-                        // Generate a unique file name
-                        var uniqueFileName = Guid.NewGuid().ToString() + "_" + images[i].FileName;
-
-                        // Combine the upload path with the unique file name
-                        string path = Path.Combine(uploadPath, uniqueFileName);
-                        imagePaths.Add(path);
-
-                        // Save the image to the specified path
-                        using (var fileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await images[i].CopyToAsync(fileStream);
-                        }
-                    }
-                    //upload item
-                    string jsonContent = System.IO.File.ReadAllText(filePath);
-                    JavaScriptSerializer js = new JavaScriptSerializer();
-                    List<Item> items;
-                    items = js.Deserialize<List<Item>>(jsonContent);
-
-                    int id;
-                    if (items == null)
-                    {
-                        items = new List<Item>();
-                        id = 0;
-                    }
-                    else
-                    {
-                        id = items[items.Count - 1].id + 1;
-                    }
-
-
-                    var name = Request.Form["name"];
-                    var price = Request.Form["price"];
-                    var description = Request.Form["description"];
-
-                    Item item = new Item();
-                    item.name = name.ToString();
-                    item.price = price.ToString();
-                    item.description = description.ToString();
-                    item.id = id;
-
-                    item.imagesPaths = new List<string>();
-                    item.imagesPaths = (imagePaths);
-                    items.Add(item);
-                    string updatedJson = js.Serialize(items);
-
-                    System.IO.File.WriteAllText(filePath, updatedJson);
-
-
-                    return Ok();
-
-                }
-                else
-                {
-                    Console.WriteLine("items file path could be found");
-                    return StatusCode(500, new { error = "items file path couldnt be found" });
-                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("unknown error  " + ex);
-                return StatusCode(500, new { error = "unknown error" });
-            }
 
-        }
-
-        [HttpPost("UploadImage")]
-        public async Task<IActionResult> UploadImage()
-        {
-            try
-            {
-                // Retrieve data from the FormData
-                int id = int.Parse(Request.Form["id"]);
-                var image = Request.Form.Files["image"];
-
-                // Check if the image is present
-                if (image == null || image.Length == 0)
-                {
-                    return BadRequest("No image uploaded.");
-                }
-
-                // Define the path where you want to store the image
-                var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "Images");
-                if (!Directory.Exists(uploadPath))
-                {
-                    Directory.CreateDirectory(uploadPath);
-                }
-
-                // Generate a unique file name
-                var uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
-
-                // Combine the upload path with the unique file name
-                var filePath = Path.Combine(uploadPath, uniqueFileName);
-
-                // Save the image to the specified path
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await image.CopyToAsync(fileStream);
-                }
-
-                // Process the data as needed
-
-                return Ok("Upload successful");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("An error occurred: " + ex.Message);
             }
         }
 
-        [HttpPost("images")]
-        public IActionResult images()
-        {
-            var imagePath = Request.Form["imagePath"];
-            try
-            {
-                Console.WriteLine("path :" + imagePath);
-                if (imagePath != "undefined")
-                {
-                    var imageBytes = System.IO.File.ReadAllBytes(imagePath);
-                    Console.WriteLine("image" + imageBytes.Length);
-                    return File(imageBytes, "image/jpeg"); // Adjust the content type as needed
-                }
-            }
-            catch
-            {
-                return NotFound();
-            }
-            return BadRequest();
-        }
 
 
         [HttpPost("Login")]
@@ -324,23 +174,23 @@ namespace BikeShop.Controllers
                     }
 
 
-                  
 
-                   
-                    List<string> images64 = new List<string>(); 
+
+
+                    List<string> images64 = new List<string>();
                     for (int i = 0; i < images.Count; i++)
                     {
 
 
 
-                        
+
                         images64.Add(ConvertImageToBase64(images[i]));
                     }
                     //upload item
 
-                    
-                     var service = new AzureBlobService();
-                    string jsonContent = await service.GetJsonFileContentsAsync("Data/items.json"); //get the old file from azure
+
+                    var service = new AzureBlobService();
+                    string jsonContent = await service.GetJsonFileContentsAsync("items.json"); //get the old file from azure
                     JavaScriptSerializer js = new JavaScriptSerializer();
                     List<Item> items;
                     items = js.Deserialize<List<Item>>(jsonContent);
@@ -367,7 +217,7 @@ namespace BikeShop.Controllers
                     item.description = description.ToString();
                     item.id = id;
 
-                  
+
                     item.images = (images64);
                     items.Add(item);
                     string updatedJson = js.Serialize(items);
@@ -375,7 +225,7 @@ namespace BikeShop.Controllers
                     System.IO.File.WriteAllText(filePath, updatedJson);
 
                     //overwrite the file is azure
-                    await  service.UploadFilesAsync("Data/items.json");
+                    await service.UploadFilesAsync("items.json");
 
 
                     return Ok();
@@ -406,10 +256,10 @@ namespace BikeShop.Controllers
                 if (System.IO.File.Exists(filePath))
                 {
 
-                 
+
 
                     var service = new AzureBlobService();
-                    string jsonContent = await service.GetJsonFileContentsAsync("Data/orders.json"); //get the old file from azure
+                    string jsonContent = await service.GetJsonFileContentsAsync("orders.json"); //get the old file from azure
                     JavaScriptSerializer js = new JavaScriptSerializer();
                     List<Order> orders;
                     orders = js.Deserialize<List<Order>>(jsonContent);
@@ -434,7 +284,7 @@ namespace BikeShop.Controllers
 
                     //    List<Item> itemsList = js.Deserialize<List<Item>>(items);
                     Item[] itemArray = js.Deserialize<Item[]>(items);
-               
+
 
                     //add the new order
 
@@ -445,13 +295,13 @@ namespace BikeShop.Controllers
                     order.id = id;
 
                     orders.Add(order);
-                
+
                     string updatedJson = js.Serialize(orders);
 
                     System.IO.File.WriteAllText(filePath, updatedJson);
 
                     //overwrite the file is azure
-                    await service.UploadFilesAsync("Data/orders.json");
+                    await service.UploadFilesAsync("orders.json");
 
 
                     return Ok("good");

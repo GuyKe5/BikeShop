@@ -54,6 +54,9 @@ export function HomePage(props) {
                         images={product.images}
                         name={product.name}
                         description={product.description}
+                        ItemId={product.id}
+                        isAdmin={props.isAdmin}
+
                         onAddToCart={() => handleAddToCart(product.id)}
                     />
                 ))}
