@@ -57,7 +57,14 @@ textarea {
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s, color 0.3s; /* Add smooth transition */
 }
+
+    /* Change button color on hover */
+    .submit-button:hover {
+        background-color: #0056b3; /* Darker shade of the primary color */
+    }
+    
 
 /* Responsive Styles */
 @media (max-width: 768px) {

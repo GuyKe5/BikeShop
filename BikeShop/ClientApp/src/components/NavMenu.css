@@ -12,21 +12,16 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Center the logo and company name */
 .logo-container {
     display: flex;
     align-items: center;
 }
 
-/* Adjust the logo and company name size for mobile devices */
-.logo {
-    width: 30px;
-    height: 30px;
-    margin-right: 5px;
-}
-
-h1 {
-    font-size: 18px;
+.logo-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
 }
 
 nav {

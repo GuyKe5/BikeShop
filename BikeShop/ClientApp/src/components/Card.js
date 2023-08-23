@@ -1,7 +1,7 @@
 ﻿import React, { useState, useEffect } from 'react';
 import './Card.css';
 import { DeletePopUp } from './DeletePopUp';
-const Card = ({ imagesPaths, name, description, onAddToCart, images, isAdmin ,ItemId }) => {
+const Card = ({ imagesPaths, name, description, onAddToCart, images, isAdmin ,ItemId ,price}) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isAdded, setIsAdded] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
@@ -63,6 +63,7 @@ const Card = ({ imagesPaths, name, description, onAddToCart, images, isAdmin ,It
                 </div>
             </div>
             <h3>{name}</h3>
+            <p>Price: ₪{price}</p>
             <p>{description}</p>
             <button onClick={handleAddToCart}>
                 {isAdded ? 'Added to Cart' : 'Add to Cart'}

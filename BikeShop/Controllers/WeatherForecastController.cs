@@ -38,6 +38,28 @@ namespace BikeShop.Controllers
             }
         }
 
+        [HttpGet("GetOrders")]
+        public async Task<Order[]> GetOrders()
+        {
+            try
+            {
+
+                var service = new AzureBlobService();
+                string jsonContent = await service.GetJsonFileContentsAsync("orders.json");
+
+
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                Order[] orders = js.Deserialize<Order[]>(jsonContent);
+
+                return orders;
+
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+        }
 
         [HttpPost("DeleteItem")]
         public async void DeleteItem()

@@ -19,7 +19,7 @@ export function DeletePopUp({ ItemId, showPopup, setShowPopup }) {
               
             })
         setShowPopup(false);
-        window.location.reload();
+        
 
     }
 
