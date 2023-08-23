@@ -218,7 +218,7 @@ namespace BikeShop.Controllers
                     items = js.Deserialize<List<Item>>(jsonContent);
 
                     int id;
-                    if (items == null)
+                    if (items.Count == 0)
                     {
                         items = new List<Item>();
                         id = 0;
@@ -232,12 +232,14 @@ namespace BikeShop.Controllers
                     var name = Request.Form["name"];
                     var price = Request.Form["price"];
                     var description = Request.Form["description"];
+                    var category = Request.Form["category"];
 
                     Item item = new Item();
                     item.name = name.ToString();
                     item.price = price.ToString();
                     item.description = description.ToString();
                     item.id = id;
+                    item.category= category
 
 
                     item.images = (images64);
@@ -247,7 +249,7 @@ namespace BikeShop.Controllers
                     System.IO.File.WriteAllText(filePath, updatedJson);
 
                     //overwrite the file is azure
-                    await service.UploadFilesAsync("items.json");
+                //    await service.UploadFilesAsync("items.json");
 
 
                     return Ok();

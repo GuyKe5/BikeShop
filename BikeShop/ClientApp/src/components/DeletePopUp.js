@@ -1,7 +1,7 @@
 ﻿import React, { useState } from 'react';
 import "./DeletePopUp.css";
 
-export function DeletePopUp({ ItemId, showPopup, setShowPopup }) {
+export function DeletePopUp({ ItemId, showPopup, setShowPopup, setIsDeleted }) {
 
     const togglePopup = () => {
         setShowPopup(!showPopup);
@@ -19,7 +19,7 @@ export function DeletePopUp({ ItemId, showPopup, setShowPopup }) {
               
             })
         setShowPopup(false);
-        
+        setIsDeleted((prev) => !prev);
 
     }
 

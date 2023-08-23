@@ -31,6 +31,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="ClientApp\src\categories.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="ClientApp\src\components\NewFolder\" />
     <Folder Include="Images\" />
   </ItemGroup>

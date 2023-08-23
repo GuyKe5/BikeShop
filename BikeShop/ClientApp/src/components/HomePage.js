@@ -8,7 +8,7 @@ export function HomePage(props) {
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
-
+    const [isDeleted, setIsDeleted] = useState(false);
     const { cartItems, setCartItems } = props;
 
     useEffect(() => {
@@ -23,7 +23,7 @@ export function HomePage(props) {
         };
 
         fetchProducts();
-    }, []);
+    }, [isDeleted]);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -57,7 +57,7 @@ export function HomePage(props) {
                         ItemId={product.id}
                         isAdmin={props.isAdmin}
                         price={product.price }
-
+                        setIsDeleted={setIsDeleted }
                         onAddToCart={() => handleAddToCart(product.id)}
                     />
                 ))}

@@ -1,5 +1,6 @@
 ﻿   import React, { useState,useEffect } from 'react';
-    import './UploadPage.css';
+import './UploadPage.css';
+import categoriesData from '../categories.json'; 
 
     export function UploadItemsPage({ isAdmin }) {
 
@@ -15,11 +16,15 @@
         const [image3, setImage3] = useState()
         const [image4, setImage4] = useState()
         const [image5, setImage5] = useState()
-
+        const [selectedCategory, setSelectedCategory] = useState(''); // State to hold the selected category
+        const [loadedCategories, setLoadedCategories] = useState([]); 
         useEffect(() => {
             return () => {
                 setMsg('');
             };
+        }, []);
+        useEffect(() => {
+            setLoadedCategories(categoriesData);
         }, []);
 
         if (isAdmin !== true) {
@@ -58,7 +63,8 @@
                     name: itemName,
                     price: itemPrice,
                     description: itemDescription,
-                    imagesPaths: ""
+                    imagesPaths: "",
+                    category: selectedCategory
                 };
 
 
@@ -93,7 +99,7 @@
                     });
 
 
-
+                    setMsg("Item Uploaded")
 
               
 
@@ -103,79 +109,94 @@
                 console.error('Error:', error);
          
             }
+            
         };
 
+return (
+        <div className="upload-page">
+            <div className="upload-container">
+                <h2 className="text-center mb-4">Upload New Item</h2>
+                <form>
+                    <div className="form-group">
+                        <label htmlFor="itemName">Name</label>
+                        <input
+                            type="text"
+                            id="itemName"
+                            className="form-control"
+                            value={itemName}
+                            onChange={(e) => setItemName(e.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="itemPrice">Price</label>
+                        <input
+                            type="text"
+                            id="itemPrice"
+                            className="form-control"
+                            value={itemPrice}
+                            onChange={(e) => setItemPrice(e.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="itemDescription">Description</label>
+                        <textarea
+                            id="itemDescription"
+                            className="form-control"
+                            rows="3"
+                            value={itemDescription}
+                            onChange={(e) => setItemDescription(e.target.value)}
+                    ></textarea>
 
-
-        return (
-            <div className="upload-page">
-                <div className="upload-container">
-                    <h2 className="text-center mb-4">Upload New Item</h2>
-                    <form>
-                        <div className="form-group">
-                            <label htmlFor="itemName">Name</label>
-                            <input
-                                type="text"
-                                id="itemName"
-                                className="form-control"
-                                value={itemName}
-                                onChange={(e) => setItemName(e.target.value)}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="itemPrice">Price</label>
-                            <input
-                                type="text"
-                                id="itemPrice"
-                                className="form-control"
-                                value={itemPrice}
-                                onChange={(e) => setItemPrice(e.target.value)}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="itemDescription">Description</label>
-                            <textarea
-                                id="itemDescription"
-                                className="form-control"
-                                rows="3"
-                                value={itemDescription}
-                                onChange={(e) => setItemDescription(e.target.value)}
-                            ></textarea>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="itemPictures">Pictures</label>
-                            <input
-                                type="file"
-                                name="file"
-                                multiple
-                                id="itemPictures"
-                                className="form-control-file"
-
-                                onChange={handleImageChange}
-                            />
-                        </div>
-                        <div className="image-preview-container">
-                            {imagePreviews.map((preview, index) => (
-                                <img
-                                    key={index}
-                                    src={preview}
-                                    alt={`Preview ${index}`}
-                                    className="image-preview"
-                                />
-                            ))}
-                        </div>
-                        <button
-                            type="button"
-                            className="btn btn-primary btn-block"
-                            onClick={handleUpload}
+                    <div className="form-group">
+                        <label htmlFor="itemCategory">Category</label>
+                        <select
+                            id="itemCategory"
+                            className="form-control"
+                            value={selectedCategory}
+                            onChange={(e) => setSelectedCategory(e.target.value)}
                         >
-                            Upload
-                        </button>
-                    </form>
-                    {msg && <p>{msg}</p>}
-                </div>
+                            <option value="">Select a category</option>
+                            {/* Map through the loaded categories and generate options */}
+                            {loadedCategories.map((category, index) => (
+                                <option key={index} value={category.name}>
+                                    {category.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="itemPictures">Pictures</label>
+                        <input
+                            type="file"
+                            name="file"
+                            multiple
+                            id="itemPictures"
+                            className="form-control-file"
+                            onChange={handleImageChange}
+                        />
+                    </div>
+                    <div className="image-preview-container">
+                        {imagePreviews.map((preview, index) => (
+                            <img
+                                key={index}
+                                src={preview}
+                                alt={`Preview ${index}`}
+                                className="image-preview"
+                            />
+                        ))}
+                    </div>
+                    <button
+                        type="button"
+                        className="btn btn-primary btn-block"
+                        onClick={handleUpload}
+                    >
+                        Upload
+                    </button>
+                </form>
+                {msg && <p>{msg}</p>}
             </div>
-        );
-    };
-
-
+        </div>
+    );
+}
