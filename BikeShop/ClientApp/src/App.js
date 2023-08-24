@@ -8,6 +8,7 @@ import { Layout } from './components/Layout';
 import { AdminPage } from './components/AdminPage';
 import { UploadItemsPage } from './components/UploadItemsPage';
 import { Login } from './components/Login';
+import { Categories} from './components/Categories';
 import './custom.css';
 
 export default function App() {
@@ -19,11 +20,12 @@ export default function App() {
             <NavMenu isAdmin={isAdmin} />
             <Routes>
 
-                <Route path="/" element={<HomePage isAdmin={isAdmin} cartItems={cartItems} setCartItems={setCartItems} />} />
+                <Route path="/home" element={<HomePage isAdmin={isAdmin} cartItems={cartItems} setCartItems={setCartItems} />} />
                 <Route path="/order" element={<OrderPage isAdmin={isAdmin} cartItems={cartItems} setCartItems={setCartItems} />} />
                 <Route path="/admin" element={< AdminPage isAdmin={isAdmin} />} />
                 <Route path="/login" element={< Login isAdmin={isAdmin} setIsAdmin={setIsAdmin} />} />
                 <Route path="/upload" element={< UploadItemsPage isAdmin={isAdmin} />} />
+                <Route path="/" element={< Categories isAdmin={isAdmin} />} />
 
 
 

@@ -20,6 +20,12 @@ namespace BikeShop
     {
         public string connectionString { get; set; }
     }
+    public class Category
+    {
+        public int id { get; set; }
+        public string? name { get; set; }
+        public string? imagePath { get; set; }
+    }
 
 }
 

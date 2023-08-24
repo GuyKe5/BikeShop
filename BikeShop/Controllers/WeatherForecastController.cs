@@ -7,6 +7,8 @@ using System.Text;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using System.Text.Json;
+using System;
+
 namespace BikeShop.Controllers
 {
     [ApiController]
@@ -38,6 +40,27 @@ namespace BikeShop.Controllers
             }
         }
 
+        //[HttpGet("GetCategories")]
+        //public async Task<Category[]> GetCategories()
+        //{
+        //    try
+        //    {
+
+        //        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "categories.json");
+        //        string jsonContent =  System.IO.File.ReadAllText(filePath);
+
+        //        JavaScriptSerializer js = new JavaScriptSerializer();
+        //        Category[] categories= js.Deserialize<Category[]>(jsonContent);
+
+        //        return categories;
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        return null;
+        //    }
+        //}
         [HttpGet("GetOrders")]
         public async Task<Order[]> GetOrders()
         {
@@ -239,7 +262,7 @@ namespace BikeShop.Controllers
                     item.price = price.ToString();
                     item.description = description.ToString();
                     item.id = id;
-                    item.category= category
+                    item.category = category;
 
 
                     item.images = (images64);
