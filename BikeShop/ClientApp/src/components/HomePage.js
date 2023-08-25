@@ -3,27 +3,41 @@ import { Link } from 'react-router-dom';
 import Card from './Card.js';
 import './HomePage.css';
 import './NavMenu.css';
-
+import { json, useLocation, useParams } from "react-router-dom";
 export function HomePage(props) {
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const [isDeleted, setIsDeleted] = useState(false);
     const { cartItems, setCartItems } = props;
-
+    const location = useLocation();
+    const [category, setCategory] = useState(location.state.category)
+    const [categoryName, setCategoryName] = useState(location.state.categoryName)
+    const [isLoading, setIsLoading] = useState(true);
+    console.log(location.state.category)
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch('weatherforecast');
-                const data = await response.json();
-                setProducts(data);
+                const formData = new FormData()
+                formData.append('category', category)
+                fetch('weatherforecast/GetitemsByCategory', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+
+
+                        setProducts(data)
+                        setIsLoading(false)
+                    })
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
         };
 
         fetchProducts();
-    }, [isDeleted]);
+    }, [isDeleted, category]);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -45,7 +59,10 @@ export function HomePage(props) {
     const totalPages = Math.ceil(products.length / itemsPerPage);
 
     return (
+        
         <div className="homepage">
+            <h1 className="category">{categoryName}</h1>
+            {isLoading && "Loading..." }
             <div className="cards-container">
                 {products.slice(startIndex, endIndex).map((product) => (
                     <Card
@@ -56,8 +73,8 @@ export function HomePage(props) {
                         description={product.description}
                         ItemId={product.id}
                         isAdmin={props.isAdmin}
-                        price={product.price }
-                        setIsDeleted={setIsDeleted }
+                        price={product.price}
+                        setIsDeleted={setIsDeleted}
                         onAddToCart={() => handleAddToCart(product.id)}
                     />
                 ))}

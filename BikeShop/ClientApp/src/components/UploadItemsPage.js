@@ -79,6 +79,16 @@ import categoriesData from '../categories.json';
                 formData.append('image3', image3)
                 formData.append('image4', image4)
                 formData.append('image5', image5)
+                let categoryIdd;
+                for (let i = 0; i < loadedCategories.length; i++) {
+                    if (loadedCategories[i].name === selectedCategory) {
+                        categoryIdd=loadedCategories[i].id
+                    }
+                }
+
+                formData.append('category', categoryIdd)
+
+                
 
 
                 fetch('weatherforecast/UploadItem2', {

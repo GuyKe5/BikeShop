@@ -16,6 +16,30 @@ namespace BikeShop.Controllers
     public class WeatherForecastController : ControllerBase
     {
 
+        [HttpPost("GetItemsByCategory")]
+        public async Task<List<Item>> GetItemsByCategory()
+        {
+            try
+            {
+                string category = Request.Form["category"];
+                var service = new AzureBlobService();
+                string jsonContent = await service.GetJsonFileContentsAsync("items.json");
+
+
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                List<Item> items = js.Deserialize<List<Item>>(jsonContent);
+
+                items.RemoveAll(item => item.categoryId != int.Parse(category));
+
+                return items;
+
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+        }
 
         [HttpGet]
         public async Task<Item[]> Get()
@@ -89,8 +113,8 @@ namespace BikeShop.Controllers
         {
             try
             {
-                
-                     int itemId =int.Parse( Request.Form["ItemId"] );
+
+                int itemId = int.Parse(Request.Form["ItemId"]);
                 string filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "items.json");
 
                 var service = new AzureBlobService();
@@ -241,7 +265,7 @@ namespace BikeShop.Controllers
                     items = js.Deserialize<List<Item>>(jsonContent);
 
                     int id;
-                    if (items.Count == 0)
+                    if (items == null || items.Count == 0)
                     {
                         items = new List<Item>();
                         id = 0;
@@ -256,13 +280,17 @@ namespace BikeShop.Controllers
                     var price = Request.Form["price"];
                     var description = Request.Form["description"];
                     var category = Request.Form["category"];
+                    if (category.Count == 0)
+                    {
+                        category = "-1";
+                    }
 
                     Item item = new Item();
                     item.name = name.ToString();
                     item.price = price.ToString();
                     item.description = description.ToString();
                     item.id = id;
-                    item.category = category;
+                    item.categoryId = int.Parse(category);
 
 
                     item.images = (images64);
@@ -272,7 +300,7 @@ namespace BikeShop.Controllers
                     System.IO.File.WriteAllText(filePath, updatedJson);
 
                     //overwrite the file is azure
-                //    await service.UploadFilesAsync("items.json");
+                    await service.UploadFilesAsync("items.json");
 
 
                     return Ok();

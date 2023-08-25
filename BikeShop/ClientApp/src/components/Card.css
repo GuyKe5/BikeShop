@@ -5,13 +5,16 @@
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 8px;
-    padding: 16px;
+    padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease;
     cursor: pointer;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     position: relative;
-    max-width:450px;
+    max-width: 300px; /* Set a fixed maximum width for the cards */
+    height: 450px; /* Set a fixed height for the cards */
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
 }
 
     .card:hover {
@@ -20,32 +23,32 @@
 
     .card img {
         width: 100%;
-        max-height: 200px;
+        flex: 1; /* Let the image expand to fill the available space */
         object-fit: cover;
         border-radius: 4px;
     }
 
     .card h3 {
-        margin-top: 12px;
-        font-size: 18px;
+        margin-top: 16px;
+        font-size: 20px;
         font-weight: bold;
     }
 
     .card p {
-        margin-top: 8px;
-        font-size: 14px;
+        margin-top: 10px;
+        font-size: 16px;
         color: #555;
+        flex: 1; /* Let the description expand to fill the available space */
     }
 
     .card button {
-        display: block;
-        margin-top: 16px;
-        padding: 8px 12px;
+        margin-top: 20px;
+        padding: 10px 15px;
         background-color: #007bff;
         color: #fff;
         border: none;
         border-radius: 4px;
-        font-size: 14px;
+        font-size: 16px;
         cursor: pointer;
         transition: background-color 0.3s ease;
     }
@@ -61,12 +64,12 @@
 
 .image-controls {
     position: absolute;
-    top: 50%;
+    bottom: 10px; /* Adjust the position to the bottom of the card */
     left: 0;
     width: 100%;
     display: flex;
     justify-content: space-between;
-    transform: translateY(-50%);
+    align-items: center; /* Align the buttons vertically in the center */
 }
 
     .image-controls .scroll-button {
@@ -75,7 +78,7 @@
         font-size: 24px;
         color: white;
         cursor: pointer;
-        padding: 5px 10px;
+        padding: 8px 12px;
         opacity: 0.7;
         transition: opacity 0.3s ease;
     }
@@ -87,22 +90,23 @@
 /* Media query for screens with max width 600px (phones) */
 @media (max-width: 600px) {
     .card {
-        padding: 12px;
+        max-width: 100%; /* Full width for smaller screens */
     }
 
-        .card h3 {
-            font-size: 16px;
+        .card p {
+            font-size: 14px;
         }
 
-        .card p {
-            font-size: 12px;
+        .card button {
+            font-size: 14px;
         }
 
     .image-controls .scroll-button {
         font-size: 20px;
-        padding: 4px 8px;
     }
 }
+
+/* Delete Button Styles */
 .deleteButton {
     background-color: transparent;
     border: none;

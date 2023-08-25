@@ -5,11 +5,11 @@ namespace BikeShop
     {
         public  int  id { get; set; }
         public string? name { get; set; }
-        public string? category { get; set; }
         public string?  price { get; set; }
         public  string? description { get; set; }
         public List<string>? imagesPaths { get; set; }
         public List<string>? images { get; set; }
+        public int? categoryId { get; set; }
     }
     public class User
     {
@@ -25,6 +25,7 @@ namespace BikeShop
         public int id { get; set; }
         public string? name { get; set; }
         public string? imagePath { get; set; }
+
     }
 
 }

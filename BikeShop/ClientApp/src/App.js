@@ -20,7 +20,7 @@ export default function App() {
             <NavMenu isAdmin={isAdmin} />
             <Routes>
 
-                <Route path="/home" element={<HomePage isAdmin={isAdmin} cartItems={cartItems} setCartItems={setCartItems} />} />
+                <Route path="/items" element={<HomePage isAdmin={isAdmin} cartItems={cartItems} setCartItems={setCartItems} />} />
                 <Route path="/order" element={<OrderPage isAdmin={isAdmin} cartItems={cartItems} setCartItems={setCartItems} />} />
                 <Route path="/admin" element={< AdminPage isAdmin={isAdmin} />} />
                 <Route path="/login" element={< Login isAdmin={isAdmin} setIsAdmin={setIsAdmin} />} />
